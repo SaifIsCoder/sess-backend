@@ -7,7 +7,7 @@ const teamMemberSchema = new mongoose.Schema(
     image: { type: String, required: true }, // Cloudinary URL
     category: {
       type: String,
-      enum: ["Leadership", "CodeCrafters", "Marketing PR & Media Wing"],
+      enum: ["Leadership", "CodeCrafters", "MarketingPRandMediaWing"],
       required: true,
     },
     socials: {
