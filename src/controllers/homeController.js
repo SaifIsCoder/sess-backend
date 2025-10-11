@@ -35,3 +35,35 @@ export const getHomeData = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateHomeData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { announcementText } = req.body;
+    const backgroundImage = req.file?.path;
+
+    const updateFields = {};
+    if (announcementText) updateFields.announcementText = announcementText;
+    if (backgroundImage) updateFields.backgroundImage = backgroundImage;
+
+    const updated = await Home.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
+
+    if (!updated) return res.status(404).json({ message: "Announcement not found" });
+    res.json({ success: true, home: updated });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteHomeData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Home.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ message: "Announcement not found" });
+    res.json({ success: true, message: "Announcement deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
